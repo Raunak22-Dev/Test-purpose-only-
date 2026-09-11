@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: snowflake_raw
+    database: dev_warehouse
+    schema: raw
+    tables:
+      - name: raw_orders

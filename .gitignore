@@ -1,0 +1,10 @@
+# dbt artifacts
+target/
+dbt_packages/
+logs/
+
+# Local Python & OS files
+__pycache__/
+*.pyc
+.env
+.DS_Store

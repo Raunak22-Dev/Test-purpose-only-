@@ -1,0 +1,39 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: "Deduplicated customer dimension table containing current customer profiles."
+    columns:
+      - name: customer_key
+        description: "Surrogate key derived by hashing customer email."
+        tests:
+          - unique
+          - not_null
+
+      - name: customer_email
+        tests:
+          - not_null
+
+  - name: fct_order_items
+    description: "Grain: One row per purchased item per transaction."
+    columns:
+      - name: order_item_id
+        description: "Primary surrogate key of the line item."
+        tests:
+          - unique
+          - not_null
+
+      - name: customer_key
+        description: "Foreign key referencing dim_customers."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customers')
+                field: customer_key
+
+      - name: payment_status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['SUCCESS', 'PENDING', 'FAILED']
