@@ -16,13 +16,22 @@ flattened as (
         item.value:sku::string as item_sku,
         item.value:price::numeric(10,2) as unit_price,
         item.value:quantity::int as quantity,
+        item.index::int as item_index,
         ingested_at
     from source_data,
     lateral flatten(input => raw_payload:items) item
 )
 
 select 
-    md5(concat(coalesce(transaction_id, ''), '-', coalesce(item_sku, ''))) as order_item_id,
+    md5(
+        concat(
+            coalesce(transaction_id, ''),
+            '-',
+            coalesce(item_sku, ''),
+            '-',
+            coalesce(item_index::string, '')
+        )
+    ) as order_item_id,
     transaction_id,
     store_code,
     customer_name,
