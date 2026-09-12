@@ -22,6 +22,7 @@ select
     md5(customer_email) as customer_key,
     customer_email,
     customer_name,
-    customer_tier
+    customer_tier,
+    'ACTIVE' as customer_status
 from deduped
 where rn = 1
