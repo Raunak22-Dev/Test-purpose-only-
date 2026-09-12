@@ -47,7 +47,7 @@ jobs:
         run: dbt debug
 
       - name: Build Models in CI Schema
-        run: dbt run
+        run: dbt run --full-refresh
 
       - name: Run Schema and Data Tests
         run: dbt test
