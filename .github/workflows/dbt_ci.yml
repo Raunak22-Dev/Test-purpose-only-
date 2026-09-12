@@ -43,8 +43,11 @@ jobs:
                 client_session_keep_alive: False
           EOF
 
-      - name: Run dbt debug
+      - name: Test Connection
         run: dbt debug
 
-      - name: Run dbt tests
+      - name: Build Models in CI Schema
+        run: dbt run
+
+      - name: Run Schema and Data Tests
         run: dbt test
